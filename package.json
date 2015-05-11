@@ -35,6 +35,7 @@
       "DeWaybackize": "components/DeWaybackize.coffee",
       "FindGalleryPages": "components/FindGalleryPages.coffee",
       "FindPages": "components/FindPages.coffee",
+      "GalleryFromArgs": "components/GalleryFromArgs.coffee",
       "GetLinks": "components/GetLinks.coffee",
       "HttpGet": "components/HttpGet.coffee",
       "LastWayback": "components/LastWayback.coffee",

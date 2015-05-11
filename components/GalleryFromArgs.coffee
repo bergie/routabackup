@@ -13,10 +13,12 @@ exports.getComponent = ->
   noflo.helpers.WirePattern c,
     in: 'start'
     out: ['url', 'filename']
-  , (data, groups, out) ->
-    last = process.argv[process.argv - 1]
-    base = path.basename last
+    async: true
+    forwardGroups: true
+  , (data, groups, out, callback) ->
+    last = process.argv[process.argv.length - 1]
+    base = path.basename(last) or last
     out.filename.send "#{base}.json"
     out.url.send "http://www.routamc.org/gallery/#{base}/"
-    
+    do callback 
   c
