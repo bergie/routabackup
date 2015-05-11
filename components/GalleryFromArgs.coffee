@@ -18,7 +18,7 @@ exports.getComponent = ->
   , (data, groups, out, callback) ->
     last = process.argv[process.argv.length - 1]
     base = path.basename(last) or last
-    out.filename.send "#{base}.json"
+    out.filename.send "photos/#{base}.json"
     out.url.send "http://www.routamc.org/gallery/#{base}/"
     do callback 
   c

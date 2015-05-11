@@ -25,6 +25,10 @@
     "grunt-noflo-manifest": "^0.1.11",
     "noflo-nodejs": "0.0.6"
   },
+  "bin": {
+    "routabackup": "./bin/routabackup",
+    "routabackup-stats": "./bin/routabackup-stats"
+  },
   "noflo": {
     "graphs": {
       "FindPhotos": "graphs/FindPhotos.json",

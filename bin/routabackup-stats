@@ -1,4 +1,20 @@
-photos = require './photos.json'
+#!/usr/bin/env coffee
+# vim: set filetype=coffeescript:
+path = require 'path'
+
+if process.argv.length isnt 3
+  console.log 'Usage: ./routabackup-stats gallery-name'
+  process.exit 1
+
+fileName = process.argv[process.argv.length - 1]
+fileName = path.resolve __dirname, '../photos/', fileName
+
+try
+  photos = require "#{fileName}.json"
+catch e
+  console.log "File #{fileName}.json not found"
+  process.exit 1
+
 originals = photos.filter (p) -> p.originalWayback isnt null
 views = photos.filter (p) -> p.viewWayback isnt null
 

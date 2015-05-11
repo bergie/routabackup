@@ -1,0 +1,13 @@
+#!/usr/bin/env coffee
+# vim: set filetype=coffeescript:
+noflo = require 'noflo'
+path = require 'path'
+if process.argv.length isnt 3
+  console.log 'Usage: ./routabackup gallery-name'
+  process.exit 1
+
+graphPath = path.resolve __dirname, '../graphs/main.json'
+baseDir = path.resolve __dirname, '../'
+noflo.loadFile graphPath, baseDir, (network) ->
+  network.on 'end', ->
+    console.log 'DONE'
