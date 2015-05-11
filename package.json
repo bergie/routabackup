@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^0.19.0",
     "memento-client": "^2.0.0",
     "noflo": "^0.5.13",
+    "noflo-core": "^0.1.11",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
