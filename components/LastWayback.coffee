@@ -18,7 +18,13 @@ exports.getComponent = ->
   , (data, groups, out, callback) ->
     memento data, (err, available) ->
       return callback err if err
-      last = available.filter (a) -> a.rel and a.rel.indexOf('last') isnt -1
+      last = available.filter (a) ->
+        return false unless a.rel
+        return false unless a.datetime
+        d = new Date a.datetime
+        y = d.getYear() + 1900
+        return false if y > 2008
+        true
       unless last.length
         return callback new Error "No last available for #{data}"
       out.send last[0].href

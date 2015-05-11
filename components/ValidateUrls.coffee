@@ -5,7 +5,13 @@ checkWayback = (url, callback) ->
   memento url, (err, available) ->
     return callback err, null if err
     return callback null, null unless available?.length
-    last = available.filter (a) -> a.rel and a.rel.indexOf('first') isnt -1
+    last = available.filter (a) ->
+      return false unless a.rel
+      return false unless a.datetime
+      d = new Date a.datetime
+      y = d.getYear() + 1900
+      return false if y > 2008
+      true
     return callback null, null unless last.length
     callback null, last[0].href
 
