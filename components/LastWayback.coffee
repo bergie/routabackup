@@ -9,8 +9,9 @@ fetchMemento = (url, callback) ->
       return false unless a.datetime
       d = new Date a.datetime
       y = d.getYear() + 1900
-      return false if y > 2010
+      return false if y > 2005
       true
+    console.log last, available
     unless last.length
       if url.indexOf('html') isnt -1
         return callback new Error "No last available for #{url}"
