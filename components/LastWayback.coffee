@@ -9,7 +9,7 @@ fetchMemento = (url, callback) ->
       return false unless a.datetime
       d = new Date a.datetime
       y = d.getYear() + 1900
-      return false if y > 2005
+      return false if y > 2009
       true
     console.log last, available
     unless last.length

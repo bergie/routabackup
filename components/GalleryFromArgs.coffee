@@ -24,5 +24,5 @@ exports.getComponent = ->
       gallery = "http://www.routamc.org/gallery/#{base}/"
     out.filename.send "photos/#{base}.json"
     out.url.send gallery
-    do callback 
+    do callback
   c
