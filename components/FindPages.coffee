@@ -19,11 +19,16 @@ exports.getComponent = ->
     forwardGroups: true
   , (data, groups, out, callback) ->
     parsed = url.parse c.params.pageurl
-    if data is parsed.path
+    parsedData = url.parse data
+    unless parsedData.path
       return callback()
-    if data.indexOf(parsed.path) is -1
+    if parsedData.path is parsed.path
+      return callback()
+    if parsedData.path.indexOf(parsed.path) is -1
       return callback()
     if data.indexOf('startfrom') isnt -1
+      return callback()
+    if data.indexOf('midcom_site') isnt -1
       return callback()
     
     out.send data

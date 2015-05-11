@@ -9,74 +9,79 @@
     },
     "inports": {},
     "outports": {},
-    "groups": [],
+    "groups": [
+        {
+            "name": "Subgallery",
+            "nodes": [],
+            "metadata": {
+                "description": ""
+            }
+        },
+        {
+            "name": "Photo",
+            "nodes": [],
+            "metadata": {
+                "description": ""
+            }
+        }
+    ],
     "processes": {
-        "GetIndex": {
-            "component": "routabackup/HttpGet",
-            "metadata": {
-                "label": "GetIndex",
-                "x": 144,
-                "y": 36,
-                "width": 72,
-                "height": 72
-            }
-        },
-        "core/Output_wuu26": {
-            "component": "core/Output",
-            "metadata": {
-                "label": "core/Output",
-                "x": 792,
-                "y": 72,
-                "width": 72,
-                "height": 72
-            }
-        },
-        "FindLinks": {
-            "component": "routabackup/GetLinks",
-            "metadata": {
-                "label": "FindLinks",
-                "x": 288,
-                "y": 36,
-                "width": 72,
-                "height": 72
-            }
-        },
-        "PhotoPages": {
-            "component": "routabackup/FindPages",
-            "metadata": {
-                "label": "PhotoPages",
-                "x": 432,
-                "y": 72,
-                "width": 72,
-                "height": 72
-            }
-        },
-        "GalleryUrl": {
+        "core/Repeat_d74dk": {
             "component": "core/Repeat",
             "metadata": {
-                "label": "GalleryUrl",
+                "label": "core/Repeat",
                 "x": 36,
-                "y": 72,
+                "y": 180,
                 "width": 72,
                 "height": 72
             }
         },
-        "OriginalUrl": {
-            "component": "routabackup/DeWaybackize",
+        "FindPhotoPages": {
+            "component": "routabackup/FindPhotos",
             "metadata": {
-                "label": "OriginalUrl",
-                "x": 540,
-                "y": 72,
+                "label": "FindPhotoPages",
+                "x": 180,
+                "y": 180,
                 "width": 72,
                 "height": 72
             }
         },
-        "LastAvailable": {
-            "component": "routabackup/LastWayback",
+        "routabackup/GetPhotos": {
+            "component": "routabackup/GetPhotos",
             "metadata": {
-                "label": "LastAvailable",
-                "x": 684,
-                "y": 72,
+                "label": "GetPhotos",
+                "x": 324,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "Collect": {
+            "component": "adapters/PacketsToArray",
+            "metadata": {
+                "label": "Collect",
+                "x": 432,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "ToJson": {
+            "component": "strings/Jsonify",
+            "metadata": {
+                "label": "ToJson",
+                "x": 576,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "SaveJson": {
+            "component": "filesystem/WriteFile",
+            "metadata": {
+                "label": "SaveJson",
+                "x": 720,
+                "y": 180,
                 "width": 72,
                 "height": 72
             }
@@ -85,33 +90,11 @@
     "connections": [
         {
             "src": {
-                "process": "GetIndex",
+                "process": "core/Repeat_d74dk",
                 "port": "out"
             },
             "tgt": {
-                "process": "FindLinks",
-                "port": "in"
-            },
-            "metadata": {}
-        },
-        {
-            "src": {
-                "process": "GalleryUrl",
-                "port": "out"
-            },
-            "tgt": {
-                "process": "GetIndex",
-                "port": "in"
-            },
-            "metadata": {}
-        },
-        {
-            "src": {
-                "process": "FindLinks",
-                "port": "out"
-            },
-            "tgt": {
-                "process": "PhotoPages",
+                "process": "FindPhotoPages",
                 "port": "in"
             },
             "metadata": {
@@ -120,24 +103,11 @@
         },
         {
             "src": {
-                "process": "GalleryUrl",
+                "process": "FindPhotoPages",
                 "port": "out"
             },
             "tgt": {
-                "process": "PhotoPages",
-                "port": "pageurl"
-            },
-            "metadata": {
-                "route": 0
-            }
-        },
-        {
-            "src": {
-                "process": "PhotoPages",
-                "port": "out"
-            },
-            "tgt": {
-                "process": "OriginalUrl",
+                "process": "routabackup/GetPhotos",
                 "port": "in"
             },
             "metadata": {
@@ -146,33 +116,56 @@
         },
         {
             "src": {
-                "process": "OriginalUrl",
+                "process": "routabackup/GetPhotos",
                 "port": "out"
             },
             "tgt": {
-                "process": "LastAvailable",
-                "port": "in"
-            },
-            "metadata": {
-                "route": null
-            }
-        },
-        {
-            "src": {
-                "process": "LastAvailable",
-                "port": "out"
-            },
-            "tgt": {
-                "process": "core/Output_wuu26",
+                "process": "Collect",
                 "port": "in"
             },
             "metadata": {}
         },
         {
-            "data": "http://web.archive.org/web/20081025143556/http://www.routamc.org/gallery/black-sea-2004/",
+            "src": {
+                "process": "Collect",
+                "port": "out"
+            },
             "tgt": {
-                "process": "GalleryUrl",
+                "process": "ToJson",
                 "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "ToJson",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "SaveJson",
+                "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "data": "http://www.routamc.org/gallery/black-sea-2004/",
+            "tgt": {
+                "process": "core/Repeat_d74dk",
+                "port": "in"
+            }
+        },
+        {
+            "data": true,
+            "tgt": {
+                "process": "ToJson",
+                "port": "pretty"
+            }
+        },
+        {
+            "data": "photos.json",
+            "tgt": {
+                "process": "SaveJson",
+                "port": "filename"
             }
         }
     ]

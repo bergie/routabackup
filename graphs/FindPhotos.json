@@ -1,0 +1,328 @@
+{
+    "properties": {
+        "name": "FindPhotos",
+        "environment": {
+            "type": "noflo-nodejs"
+        },
+        "icon": "search"
+    },
+    "inports": {
+        "in": {
+            "process": "PageUrl",
+            "port": "in",
+            "metadata": {
+                "x": -252,
+                "y": 144,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "outports": {
+        "out": {
+            "process": "LastAvailable",
+            "port": "out",
+            "metadata": {
+                "x": 1548,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "groups": [],
+    "processes": {
+        "GetIndex": {
+            "component": "routabackup/HttpGet",
+            "metadata": {
+                "label": "GetIndex",
+                "x": 180,
+                "y": 36,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "FindLinks": {
+            "component": "routabackup/GetLinks",
+            "metadata": {
+                "label": "FindLinks",
+                "x": 288,
+                "y": 36,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "PhotoPages": {
+            "component": "routabackup/FindPages",
+            "metadata": {
+                "label": "PhotoPages",
+                "x": 1260,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "OriginalUrl": {
+            "component": "routabackup/DeWaybackize",
+            "metadata": {
+                "label": "OriginalUrl",
+                "x": 1152,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "LastAvailable": {
+            "component": "routabackup/LastWayback",
+            "metadata": {
+                "label": "LastAvailable",
+                "x": 1404,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "SubGalleries": {
+            "component": "routabackup/FindGalleryPages",
+            "metadata": {
+                "label": "SubGalleries",
+                "x": 576,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "GetPage": {
+            "component": "routabackup/HttpGet",
+            "metadata": {
+                "label": "GetPage",
+                "x": 828,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "OriginalGallery": {
+            "component": "routabackup/DeWaybackize",
+            "metadata": {
+                "label": "OriginalGallery",
+                "x": 432,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "LastGallery": {
+            "component": "routabackup/LastWayback",
+            "metadata": {
+                "label": "LastGallery",
+                "x": 720,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "GetLinks": {
+            "component": "routabackup/GetLinks",
+            "metadata": {
+                "label": "GetLinks",
+                "x": 972,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "LastIndex": {
+            "component": "routabackup/LastWayback",
+            "metadata": {
+                "label": "LastIndex",
+                "x": 36,
+                "y": 144,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "PageUrl": {
+            "component": "core/Split",
+            "metadata": {
+                "label": "PageUrl",
+                "x": -144,
+                "y": 144,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "connections": [
+        {
+            "src": {
+                "process": "GetIndex",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "FindLinks",
+                "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "LastGallery",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "GetPage",
+                "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "GetPage",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "GetLinks",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "LastIndex",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "GetIndex",
+                "port": "in"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "SubGalleries",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "LastGallery",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "OriginalGallery",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "SubGalleries",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "FindLinks",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "OriginalGallery",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "PhotoPages",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "LastAvailable",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "OriginalUrl",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "PhotoPages",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "FindLinks",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "OriginalUrl",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "GetLinks",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "OriginalUrl",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "PageUrl",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "PhotoPages",
+                "port": "pageurl"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "PageUrl",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "SubGalleries",
+                "port": "pageurl"
+            },
+            "metadata": {}
+        },
+        {
+            "src": {
+                "process": "PageUrl",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "LastIndex",
+                "port": "in"
+            },
+            "metadata": {}
+        }
+    ]
+}

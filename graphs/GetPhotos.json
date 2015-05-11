@@ -1,0 +1,93 @@
+{
+    "properties": {
+        "name": "GetPhotos",
+        "environment": {
+            "type": "noflo-nodejs"
+        }
+    },
+    "inports": {
+        "in": {
+            "process": "GetPage",
+            "port": "in",
+            "metadata": {
+                "x": 180,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "outports": {
+        "out": {
+            "process": "ValidateUrls",
+            "port": "out",
+            "metadata": {
+                "x": 684,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "groups": [],
+    "processes": {
+        "GetPage": {
+            "component": "routabackup/HttpGet",
+            "metadata": {
+                "label": "GetPage",
+                "x": 324,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "Objectify": {
+            "component": "routabackup/PageToObject",
+            "metadata": {
+                "label": "Objectify",
+                "x": 432,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "ValidateUrls": {
+            "component": "routabackup/ValidateUrls",
+            "metadata": {
+                "label": "ValidateUrls",
+                "x": 540,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        }
+    },
+    "connections": [
+        {
+            "src": {
+                "process": "GetPage",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "Objectify",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        },
+        {
+            "src": {
+                "process": "Objectify",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "ValidateUrls",
+                "port": "in"
+            },
+            "metadata": {
+                "route": null
+            }
+        }
+    ]
+}
