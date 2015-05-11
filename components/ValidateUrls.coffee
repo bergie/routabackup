@@ -10,7 +10,7 @@ checkWayback = (url, callback) ->
       return false unless a.datetime
       d = new Date a.datetime
       y = d.getYear() + 1900
-      return false if y > 2008
+      return false if y > 2010
       true
     return callback null, null unless last.length
     callback null, last[0].href

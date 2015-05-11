@@ -1,6 +1,22 @@
 noflo = require 'noflo'
 memento = require 'memento-client'
 
+fetchMemento = (url, callback) ->
+  memento url, (err, available) ->
+    return callback err if err
+    last = available.filter (a) ->
+      return false unless a.rel
+      return false unless a.datetime
+      d = new Date a.datetime
+      y = d.getYear() + 1900
+      return false if y > 2010
+      true
+    unless last.length
+      if url.indexOf('html') isnt -1
+        return callback new Error "No last available for #{url}"
+      return fetchMemento "#{url}.html", callback
+    callback null, last[last.length - 1].href
+
 exports.getComponent = ->
   c = new noflo.Component
   c.inPorts.add 'in',
@@ -16,18 +32,8 @@ exports.getComponent = ->
     async: true
     forwardGroups: true
   , (data, groups, out, callback) ->
-    memento data, (err, available) ->
+    fetchMemento data, (err, last) ->
       return callback err if err
-      last = available.filter (a) ->
-        return false unless a.rel
-        return false unless a.datetime
-        d = new Date a.datetime
-        y = d.getYear() + 1900
-        return false if y > 2008
-        true
-      unless last.length
-        return callback new Error "No last available for #{data}"
-      out.send last[0].href
+      out.send last
       do callback
-    
   c

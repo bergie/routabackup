@@ -23,7 +23,10 @@ exports.getComponent = ->
     $ = cheerio.load data
     val.title = $('h1').text()
     val.original = $('a[target="_blank"]').attr('href')
-    val.view = $('img').last().attr('src')
+    $('img').each (idx, element) ->
+      src = $(element).attr('src')
+      if src.indexOf('smiley') is -1
+        val.view = src
     dateLine = $('small i').text()
     if dateLine
       d = dateLine.match /([a-zA-Z\s]+)\s([0-9\s:\-]+)/

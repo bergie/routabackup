@@ -15,8 +15,8 @@ catch e
   console.log "File #{fileName}.json not found"
   process.exit 1
 
-originals = photos.filter (p) -> p.originalWayback isnt null
-views = photos.filter (p) -> p.viewWayback isnt null
+originals = photos.filter (p) -> p.originalWayback and p.originalWayback isnt null
+views = photos.filter (p) -> p.viewWayback and p.viewWayback isnt null
 
 console.log "#{originals.length} originals, #{views.length} views of #{photos.length}"
 
