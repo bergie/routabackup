@@ -171,6 +171,16 @@
                 "width": 72,
                 "height": 72
             }
+        },
+        "DoNotDisconnect": {
+            "component": "packets/DoNotDisconnect",
+            "metadata": {
+                "label": "DoNotDisconnect",
+                "x": 576,
+                "y": 36,
+                "width": 72,
+                "height": 72
+            }
         }
     },
     "connections": [
@@ -287,19 +297,6 @@
         },
         {
             "src": {
-                "process": "FindLinks",
-                "port": "out"
-            },
-            "tgt": {
-                "process": "OriginalUrl",
-                "port": "in"
-            },
-            "metadata": {
-                "route": 0
-            }
-        },
-        {
-            "src": {
                 "process": "GetLinks",
                 "port": "out"
             },
@@ -407,6 +404,32 @@
             },
             "metadata": {
                 "route": 1
+            }
+        },
+        {
+            "src": {
+                "process": "FindLinks",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "DoNotDisconnect",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 0
+            }
+        },
+        {
+            "src": {
+                "process": "DoNotDisconnect",
+                "port": "out"
+            },
+            "tgt": {
+                "process": "OriginalUrl",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 0
             }
         }
     ]
