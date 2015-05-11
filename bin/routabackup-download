@@ -1,0 +1,41 @@
+#!/usr/bin/env coffee
+# vim: set filetype=coffeescript:
+fs = require 'fs'
+request = require 'request'
+path = require 'path'
+
+
+if process.argv.length isnt 3
+  console.log 'Usage: ./routabackup-download gallery-name'
+  process.exit 1
+
+gallery = process.argv[process.argv.length - 1]
+fileName = path.resolve __dirname, '../photos/', gallery
+
+try
+  photos = require "#{fileName}.json"
+catch e
+  console.log "File #{fileName}.json not found"
+  process.exit 1
+
+originals = photos.filter (p) -> p.originalWayback and p.originalWayback isnt null
+views = photos.filter (p) -> p.viewWayback and p.viewWayback isnt null
+
+download = (url, filename, callback) ->
+  r = request(url).pipe(fs.createWriteStream(filename))
+  r.on('close', callback)
+
+try
+  fs.mkdirSync path.resolve __dirname, "../photos/#{gallery}"
+catch e
+  console.log "Directory already exists"
+
+originals.forEach (o) ->
+  filename = path.resolve __dirname, "../photos/#{gallery}", path.basename(o.originalWayback) + '.jpg'
+  download o.originalWayback, filename, ->
+    console.log "Downloaded #{filename}"
+views.forEach (o) ->
+  return if o.originalWayback
+  filename = path.resolve __dirname, "../photos/#{gallery}", path.basename(o.viewWayback) + '.jpg'
+  download o.viewWayback, filename, ->
+    console.log "Downloaded #{filename}"
