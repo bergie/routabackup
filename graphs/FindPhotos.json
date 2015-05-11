@@ -23,8 +23,18 @@
             "process": "LastAvailable",
             "port": "out",
             "metadata": {
-                "x": 1548,
+                "x": 1692,
                 "y": 180,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "error": {
+            "process": "Errors",
+            "port": "out",
+            "metadata": {
+                "x": 1692,
+                "y": 396,
                 "width": 72,
                 "height": 72
             }
@@ -148,6 +158,16 @@
                 "label": "PageUrl",
                 "x": -144,
                 "y": 144,
+                "width": 72,
+                "height": 72
+            }
+        },
+        "Errors": {
+            "component": "core/Merge",
+            "metadata": {
+                "label": "Errors",
+                "x": 1548,
+                "y": 396,
                 "width": 72,
                 "height": 72
             }
@@ -323,6 +343,71 @@
                 "port": "in"
             },
             "metadata": {}
+        },
+        {
+            "src": {
+                "process": "GetPage",
+                "port": "error"
+            },
+            "tgt": {
+                "process": "Errors",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 1
+            }
+        },
+        {
+            "src": {
+                "process": "LastGallery",
+                "port": "error"
+            },
+            "tgt": {
+                "process": "Errors",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 1
+            }
+        },
+        {
+            "src": {
+                "process": "LastAvailable",
+                "port": "error"
+            },
+            "tgt": {
+                "process": "Errors",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 1
+            }
+        },
+        {
+            "src": {
+                "process": "LastIndex",
+                "port": "error"
+            },
+            "tgt": {
+                "process": "Errors",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 1
+            }
+        },
+        {
+            "src": {
+                "process": "GetIndex",
+                "port": "error"
+            },
+            "tgt": {
+                "process": "Errors",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 1
+            }
         }
     ]
 }

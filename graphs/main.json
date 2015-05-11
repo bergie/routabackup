@@ -85,6 +85,16 @@
                 "width": 72,
                 "height": 72
             }
+        },
+        "core/Output_3xc77": {
+            "component": "core/Output",
+            "metadata": {
+                "label": "core/Output",
+                "x": 720,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
         }
     },
     "connections": [
@@ -148,10 +158,29 @@
             "metadata": {}
         },
         {
-            "data": "http://www.routamc.org/gallery/black-sea-2004/",
+            "src": {
+                "process": "FindPhotoPages",
+                "port": "error"
+            },
             "tgt": {
-                "process": "core/Repeat_d74dk",
+                "process": "core/Output_3xc77",
                 "port": "in"
+            },
+            "metadata": {
+                "route": 1
+            }
+        },
+        {
+            "src": {
+                "process": "routabackup/GetPhotos",
+                "port": "error"
+            },
+            "tgt": {
+                "process": "core/Output_3xc77",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 1
             }
         },
         {
@@ -162,10 +191,17 @@
             }
         },
         {
-            "data": "photos.json",
+            "data": "fall-2003.json",
             "tgt": {
                 "process": "SaveJson",
                 "port": "filename"
+            }
+        },
+        {
+            "data": "http://www.routamc.org/gallery/fall-2003/",
+            "tgt": {
+                "process": "core/Repeat_d74dk",
+                "port": "in"
             }
         }
     ]

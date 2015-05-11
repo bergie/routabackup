@@ -27,6 +27,16 @@
                 "width": 72,
                 "height": 72
             }
+        },
+        "error": {
+            "process": "GetPage",
+            "port": "error",
+            "metadata": {
+                "x": 684,
+                "y": 324,
+                "width": 72,
+                "height": 72
+            }
         }
     },
     "groups": [],
