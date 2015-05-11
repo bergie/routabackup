@@ -18,7 +18,7 @@ exports.getComponent = ->
   , (data, groups, out, callback) ->
     memento data, (err, available) ->
       return callback err if err
-      last = available.filter (a) -> a.rel and a.rel.indexOf('first') isnt -1
+      last = available.filter (a) -> a.rel and a.rel.indexOf('last') isnt -1
       unless last.length
         return callback new Error "No last available for #{data}"
       out.send last[0].href
