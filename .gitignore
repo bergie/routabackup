@@ -1,3 +1,4 @@
 /node_modules/
 /flowhub.json
 /photos/
+.DS_Store
