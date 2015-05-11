@@ -15,6 +15,7 @@
     "noflo-adapters": "^0.1.3",
     "noflo-core": "^0.1.11",
     "noflo-filesystem": "^1.0.6",
+    "noflo-packets": "^0.1.6",
     "noflo-strings": "^0.1.9",
     "superagent": "^1.2.0"
   },

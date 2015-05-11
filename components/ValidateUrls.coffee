@@ -23,14 +23,29 @@ exports.getComponent = ->
     forwardGroups: true
   , (data, groups, out, callback) ->
     photo = JSON.parse JSON.stringify data
-    photo.view = photo.view.replace /\/web\/[0-9*im_]+\//g, ''
-    photo.original = photo.original.replace /\/web\/[0-9*im_]+\//g, ''
+    if photo.view
+      photo.view = photo.view.replace /\/web\/[0-9*im_]+\//g, ''
+    if photo.original
+      photo.original = photo.original.replace /\/web\/[0-9*im_]+\//g, ''
     
-    checkWayback photo.original, (err, available) ->
-      photo.originalWayback = available
+      checkWayback photo.original, (err, available) ->
+        photo.originalWayback = available
+        unless photo.view
+          out.send photo
+          do callback
+          return
+        checkWayback photo.view, (err, available) ->
+          photo.viewWayback = available
+          out.send photo
+          do callback
+      return
+
+    if photo.view
       checkWayback photo.view, (err, available) ->
         photo.viewWayback = available
         out.send photo
         do callback
- 
+      return
+    out.send photo
+    do callback
   c

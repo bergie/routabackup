@@ -9,5 +9,3 @@ if process.argv.length isnt 3
 graphPath = path.resolve __dirname, '../graphs/main.json'
 baseDir = path.resolve __dirname, '../'
 noflo.loadFile graphPath, baseDir, (network) ->
-  network.on 'end', ->
-    console.log 'DONE'
