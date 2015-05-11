@@ -95,6 +95,16 @@
                 "width": 72,
                 "height": 72
             }
+        },
+        "ChooseGallery": {
+            "component": "routabackup/GalleryFromArgs",
+            "metadata": {
+                "label": "ChooseGallery",
+                "x": -72,
+                "y": 180,
+                "width": 72,
+                "height": 72
+            }
         }
     },
     "connections": [
@@ -184,6 +194,32 @@
             }
         },
         {
+            "src": {
+                "process": "ChooseGallery",
+                "port": "url"
+            },
+            "tgt": {
+                "process": "core/Repeat_d74dk",
+                "port": "in"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
+            "src": {
+                "process": "ChooseGallery",
+                "port": "filename"
+            },
+            "tgt": {
+                "process": "SaveJson",
+                "port": "filename"
+            },
+            "metadata": {
+                "route": 2
+            }
+        },
+        {
             "data": true,
             "tgt": {
                 "process": "ToJson",
@@ -191,17 +227,10 @@
             }
         },
         {
-            "data": "fall-2003.json",
+            "data": true,
             "tgt": {
-                "process": "SaveJson",
-                "port": "filename"
-            }
-        },
-        {
-            "data": "http://www.routamc.org/gallery/fall-2003/",
-            "tgt": {
-                "process": "core/Repeat_d74dk",
-                "port": "in"
+                "process": "ChooseGallery",
+                "port": "start"
             }
         }
     ]
